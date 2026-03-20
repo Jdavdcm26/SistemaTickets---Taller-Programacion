@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import sistematickets.model.Ruta;
 import sistematickets.util.RutaArchivos;
@@ -48,4 +49,16 @@ public class RutaDao {
         br.close();
         return rutas;
     }  
+        public Ruta buscarPorCodigo(String codRuta) throws IOException {
+            return cargarRutas().get(codRuta);
+         }
+         public void agregarRuta(Ruta r) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(RutaArchivos.RUTAS, true));
+        bw.write(r.toFile());
+        bw.newLine();
+        bw.close();
+    }
+          public ArrayList<Ruta> cargarLista() throws IOException {
+            return new ArrayList<>(cargarRutas().values());
+          }
 }
