@@ -5,6 +5,8 @@
 package sistematickets.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import sistematickets.dao.ConductorDao;
 import sistematickets.model.Conductor;
 
@@ -39,4 +41,42 @@ public class ConductorService {
             return null;
         }
     }
+    
+    public ArrayList<Conductor> listarTodos() {
+        try {
+            return conductorDao.cargarLista();
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public boolean eliminar(String cedula) {
+        try {
+            HashMap<String, Conductor> conductores = conductorDao.cargarConductores();
+            if (!conductores.containsKey(cedula)) {
+                return false;
+            }
+            conductores.remove(cedula);
+            conductorDao.guardarConductores(conductores);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public boolean actualizar(Conductor c) {
+        try {
+            HashMap<String, Conductor> conductores = conductorDao.cargarConductores();
+            if (!conductores.containsKey(c.getCedula())) {
+                return false;
+            }
+            conductores.put(c.getCedula(), c);
+            conductorDao.guardarConductores(conductores);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+    
+
 }
