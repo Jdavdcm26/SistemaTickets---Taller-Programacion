@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import sistematickets.model.Pasajero;
 import sistematickets.model.Ticket;
@@ -55,6 +56,11 @@ public class TicketDao {
             }
         }
         return tickets;
+    }
+    
+    public ArrayList<Ticket> cargarLista(PasajeroDao pasajeroDao, VehiculoDao vehiculoDao,
+                                          RutaDao rutaDao, ConductorDao conductorDao) throws IOException {
+        return new ArrayList<>(cargarTickets(pasajeroDao, vehiculoDao, rutaDao, conductorDao).values());
     }
     
 }
