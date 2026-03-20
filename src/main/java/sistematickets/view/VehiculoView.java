@@ -94,4 +94,26 @@ public class VehiculoView {
             }
         }
     }
+    private void buscarPorPlaca() {
+        System.out.println("\n--- Buscar Vehículo ---");
+        System.out.print("Placa: ");
+        Vehiculo v = vehiculoService.buscarPorPlaca(sc.nextLine());
+        if (v != null) {
+            System.out.println(v.imprimirDetalle());
+        } else {
+            System.out.println("No se encontró ningún vehículo con esa placa.");
+        }
+    }
+
+    private void asignarConductor() {
+        System.out.println("\n--- Asignar Conductor ---");
+        System.out.print("Placa del vehículo  : "); String placa  = sc.nextLine();
+        System.out.print("Cédula del conductor: "); String cedula = sc.nextLine();
+
+        if (vehiculoService.asignarConductor(placa, cedula)) {
+            System.out.println("Conductor asignado correctamente.");
+        } else {
+            System.out.println("Error: vehículo o conductor no encontrado, o conductor sin licencia.");
+        }
+    }
 }
