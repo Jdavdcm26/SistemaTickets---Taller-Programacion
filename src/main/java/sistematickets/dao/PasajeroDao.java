@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import sistematickets.model.Pasajero;
 import sistematickets.model.PasajeroAdultoMayor;
@@ -61,6 +62,25 @@ public class PasajeroDao {
             }
         }
         return pasajeros;
+    }
+    
+    public void agregarPasajero(Pasajero p) throws IOException {
+        File archivo = new File(RutaArchivos.PASAJEROS);
+        if (!archivo.exists()) {
+            archivo.createNewFile();
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
+            bw.write(p.toFile());
+            bw.newLine();
+        }
+    }
+
+    public Pasajero buscarPorCedula(String cedula) throws IOException {
+        return cargarPasajeros().get(cedula);
+    }
+
+    public ArrayList<Pasajero> cargarLista() throws IOException {
+        return new ArrayList<>(cargarPasajeros().values());
     }
     
 }
