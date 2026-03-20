@@ -116,4 +116,38 @@ public class VehiculoView {
             System.out.println("Error: vehículo o conductor no encontrado, o conductor sin licencia.");
         }
     }
+    private void eliminar() {
+        System.out.println("\n--- Eliminar Vehículo ---");
+        System.out.print("Placa: ");
+        if (vehiculoService.eliminar(sc.nextLine())) {
+            System.out.println("Vehículo eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró ningún vehículo con esa placa.");
+        }
+    }
+    private void actualizar() {
+    System.out.println("\n--- Actualizar Vehículo ---");
+    System.out.print("Placa del vehículo a actualizar: ");
+    String placa = sc.nextLine();
+
+    Vehiculo v = vehiculoService.buscarPorPlaca(placa);
+    if (v == null) {
+        System.out.println("No se encontró ningún vehículo con esa placa.");
+        return;
+    }
+
+    System.out.println("Deja en blanco para conservar el valor actual.");
+    System.out.print("Nuevo código de ruta (" + v.getRuta().getCodRuta() + "): ");
+    String codRuta = sc.nextLine();
+
+    String conductorActual = v.getConductor() != null ? v.getConductor().getCedula() : "Sin asignar";
+    System.out.print("Nueva cédula conductor (" + conductorActual + "): ");
+    String cedula = sc.nextLine();
+
+    if (vehiculoService.actualizar(placa, codRuta, cedula)) {
+        System.out.println("Vehículo actualizado correctamente.");
+    } else {
+        System.out.println("Error al actualizar.");
+    }
+}
 }
