@@ -6,6 +6,7 @@ package sistematickets.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import sistematickets.dao.RutaDao;
 import sistematickets.model.Ruta;
 
@@ -38,6 +39,32 @@ public class RutaService {
             return rutaDao.cargarLista();
         } catch (IOException e) {
             return new ArrayList<>();
+        }
+    }
+    public boolean eliminar(String codRuta) {
+        try {
+            HashMap<String, Ruta> rutas = rutaDao.cargarRutas();
+            if (!rutas.containsKey(codRuta)) {
+                return false;
+            }
+            rutas.remove(codRuta);
+            rutaDao.guardarRutas(rutas);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+    public boolean actualizar(Ruta r) {
+        try {
+            HashMap<String, Ruta> rutas = rutaDao.cargarRutas();
+            if (!rutas.containsKey(r.getCodRuta())) {
+                return false;
+            }
+            rutas.put(r.getCodRuta(), r);
+            rutaDao.guardarRutas(rutas);
+            return true;
+        } catch (IOException e) {
+            return false;
         }
     }
 }
