@@ -157,4 +157,8 @@ public class TicketView {
                 System.out.println(tipo + ": " + cantidad + " tickets"));
         }
     }
+    private void vehiculoConMasTickets() {
+        System.out.println("\n--- Vehículo con más tickets ---");
+        System.out.println(ticketService.vehiculoConMasTickets());
+    }
 }
