@@ -21,34 +21,34 @@ import sistematickets.util.RutaArchivos;
  */
 public class RutaDao {
       public void guardarRutas(HashMap<String, Ruta> rutas) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(RutaArchivos.RUTAS));
-        File archivo = new File(RutaArchivos.RUTAS);
-        if (!archivo.exists()) {
-        archivo.createNewFile(); // crea el archivo si no existe
+    File archivo = new File(RutaArchivos.RUTAS); // PRIMERO el archivo
+    if (!archivo.exists()) {
+        archivo.createNewFile();
     }
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
         for (Ruta r : rutas.values()) {
             bw.write(r.toFile());
             bw.newLine();
         }
-        bw.close();
-        
     }
-        public HashMap<String, Ruta> cargarRutas() throws IOException {
-        HashMap<String, Ruta> rutas = new HashMap<>();
-        BufferedReader br = new BufferedReader(new FileReader(RutaArchivos.RUTAS));
-        File archivo = new File(RutaArchivos.RUTAS);
-        if (!archivo.exists()) {
+}
+
+public HashMap<String, Ruta> cargarRutas() throws IOException {
+    HashMap<String, Ruta> rutas = new HashMap<>();
+    File archivo = new File(RutaArchivos.RUTAS); // PRIMERO el archivo
+    if (!archivo.exists()) {
         return rutas;
-        }
+    }
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
         String linea;
         while ((linea = br.readLine()) != null) {
             String[] p = linea.split(";");
             Ruta r = new Ruta(p[0], p[1], p[2], Integer.parseInt(p[3]), Integer.parseInt(p[4]));
             rutas.put(r.getCodRuta(), r);
-             }
-        br.close();
-        return rutas;
-    }  
+        }
+    }
+    return rutas;
+} 
         public Ruta buscarPorCodigo(String codRuta) throws IOException {
             return cargarRutas().get(codRuta);
          }
