@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import sistematickets.model.Conductor;
 import sistematickets.util.RutaArchivos;
@@ -48,6 +49,25 @@ public class ConductorDao {
             }
         }
         return conductores;
+    }
+    
+    public void agregarConductor(Conductor c) throws IOException {
+        File archivo = new File(RutaArchivos.CONDUCTORES);
+        if (!archivo.exists()) {
+            archivo.createNewFile();
+        }
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
+            bw.write(c.toFile());
+            bw.newLine();
+        }
+    }
+
+    public Conductor buscarPorCedula(String cedula) throws IOException {
+        return cargarConductores().get(cedula);
+    }
+
+    public ArrayList<Conductor> cargarLista() throws IOException {
+        return new ArrayList<>(cargarConductores().values());
     }
     
 }
