@@ -20,14 +20,14 @@ public class RutaView {
     public void menu() {
         int opcion;
         do {
-            System.out.println("\n===== MENÚ RUTAS =====");
+            System.out.println("\n===== MENU RUTAS =====");
             System.out.println("1. Agregar ruta");
             System.out.println("2. Listar todas");
-            System.out.println("3. Buscar por código");
+            System.out.println("3. Buscar por codigo");
             System.out.println("4. Actualizar ruta");
             System.out.println("5. Eliminar ruta");
             System.out.println("0. Volver");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -37,23 +37,23 @@ public class RutaView {
                 case 4 -> actualizar();
                 case 5 -> eliminar();
                 case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opcion no valida.");
             }
         } while (opcion != 0);
     }
     private void agregar() {
         System.out.println("\n--- Agregar Ruta ---");
-        System.out.print("Código      : "); String cod  = sc.nextLine();
+        System.out.print("Codigo      : "); String cod  = sc.nextLine();
         System.out.print("Origen      : "); String ori  = sc.nextLine();
         System.out.print("Destino     : "); String des  = sc.nextLine();
-        System.out.print("Kilómetros  : "); int km       = Integer.parseInt(sc.nextLine());
+        System.out.print("Kilometros  : "); int km       = Integer.parseInt(sc.nextLine());
         System.out.print("Tiempo(min) : "); int tiem     = Integer.parseInt(sc.nextLine());
 
         Ruta r = new Ruta(cod, ori, des, km, tiem);
         if (rutaService.agregar(r)) {
             System.out.println("Ruta agregada correctamente.");
         } else {
-            System.out.println("Error: ya existe una ruta con ese código.");
+            System.out.println("Error: ya existe una ruta con ese codigo.");
         }
     }
       private void listarTodas() {
@@ -70,23 +70,23 @@ public class RutaView {
     }
       private void buscarPorCodigo() {
         System.out.println("\n--- Buscar Ruta ---");
-        System.out.print("Código: ");
+        System.out.print("Codigo: ");
         String cod = sc.nextLine();
         Ruta r = rutaService.buscarPorCodigo(cod);
         if (r != null) {
             System.out.println(r.imprimirDetalle());
         } else {
-            System.out.println("No se encontró ninguna ruta con ese código.");
+            System.out.println("No se encontro ninguna ruta con ese codigo.");
         }
     }
         private void actualizar() {
             System.out.println("\n--- Actualizar Ruta ---");
-            System.out.print("Código de la ruta a actualizar: ");
+            System.out.print("Codigo de la ruta a actualizar: ");
             String cod = sc.nextLine();
 
             Ruta r = rutaService.buscarPorCodigo(cod);
             if (r == null) {
-            System.out.println("No se encontró ninguna ruta con ese código.");
+            System.out.println("No se encontro ninguna ruta con ese codigo.");
             return;
         }
 
@@ -95,7 +95,7 @@ public class RutaView {
             String ori = sc.nextLine();
             System.out.print("Nuevo destino (" + r.getCiuDestino() + "): ");
             String des = sc.nextLine();
-            System.out.print("Nuevos kilómetros (" + r.getKilometros() + "): ");
+            System.out.print("Nuevos kilometros (" + r.getKilometros() + "): ");
             String km = sc.nextLine();
             System.out.print("Nuevo tiempo en min (" + r.getTiemReco() + "): ");
             String tiem = sc.nextLine();
@@ -113,12 +113,12 @@ public class RutaView {
     }
         private void eliminar() {
         System.out.println("\n--- Eliminar Ruta ---");
-        System.out.print("Código: ");
+        System.out.print("Codigo: ");
         String cod = sc.nextLine();
         if (rutaService.eliminar(cod)) {
             System.out.println("Ruta eliminada correctamente.");
         } else {
-            System.out.println("No se encontró ninguna ruta con ese código.");
+            System.out.println("No se encontro ninguna ruta con ese codigo.");
         }
     }
 }

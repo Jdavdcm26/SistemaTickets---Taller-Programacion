@@ -27,14 +27,14 @@ public class MenuPrincipal {
 
         int opcion;
         do {
-            System.out.println("\n===== MENÚ PRINCIPAL =====");
-            System.out.println("1. Gestión de Rutas");
-            System.out.println("2. Gestión de Vehículos");
-            System.out.println("3. Gestión de Conductores");
-            System.out.println("4. Gestión de Pasajeros");
+            System.out.println("\n===== MENU PRINCIPAL =====");
+            System.out.println("1. Gestion de Rutas");
+            System.out.println("2. Gestion de Vehículos");
+            System.out.println("3. Gestion de Conductores");
+            System.out.println("4. Gestion de Pasajeros");
             System.out.println("5. Venta de Tickets");
             System.out.println("0. Salir");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -44,7 +44,7 @@ public class MenuPrincipal {
                 case 4 -> pasajeroView.menu();
                 case 5 -> ticketView.menu();
                 case 0 -> System.out.println("¡Hasta luego!");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opcion no válida.");
             }
         } while (opcion != 0);
     }

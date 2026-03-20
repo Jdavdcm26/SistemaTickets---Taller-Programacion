@@ -26,15 +26,15 @@ public class VehiculoView {
     public void menu() {
         int opcion;
         do {
-            System.out.println("\n===== MENÚ VEHÍCULOS =====");
-            System.out.println("1. Registrar vehículo");
+            System.out.println("\n===== MENU VEHÍCULOS =====");
+            System.out.println("1. Registrar vehiculo");
             System.out.println("2. Listar todos");
             System.out.println("3. Buscar por placa");
             System.out.println("4. Asignar conductor");
             System.out.println("5. Actualizar vehículo");
             System.out.println("6. Eliminar vehículo");
             System.out.println("0. Volver");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -45,21 +45,21 @@ public class VehiculoView {
                 case 5 -> actualizar();
                 case 6 -> eliminar();
                 case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opcion no valida.");
             }
         } while (opcion != 0);
     }
     private void registrar() {
-        System.out.println("\n--- Registrar Vehículo ---");
+        System.out.println("\n--- Registrar Vehiculo ---");
         System.out.print("Placa: "); String placa = sc.nextLine();
 
         System.out.println("Tipo: 1. Bus  2. Buseta  3. MicroBus");
         System.out.print("Tipo: "); int tipo = Integer.parseInt(sc.nextLine());
 
-        System.out.print("Código de ruta: "); String codRuta = sc.nextLine();
+        System.out.print("Codigo de ruta: "); String codRuta = sc.nextLine();
         Ruta ruta = rutaService.buscarPorCodigo(codRuta);
         if (ruta == null) {
-            System.out.println("No existe una ruta con ese código.");
+            System.out.println("No existe una ruta con ese codigo.");
             return;
         }
 
@@ -71,22 +71,22 @@ public class VehiculoView {
         };
 
         if (v == null) {
-            System.out.println("Tipo no válido.");
+            System.out.println("Tipo no valido.");
             return;
         }
 
         if (vehiculoService.agregar(v)) {
-            System.out.println("Vehículo registrado correctamente.");
+            System.out.println("Vehiculo registrado correctamente.");
         } else {
-            System.out.println("Error: ya existe un vehículo con esa placa.");
+            System.out.println("Error: ya existe un vehiculo con esa placa.");
         }
     }
 
     private void listarTodos() {
-        System.out.println("\n--- Listado de Vehículos ---");
+        System.out.println("\n--- Listado de Vehiculos ---");
         ArrayList<Vehiculo> lista = vehiculoService.listarTodos();
         if (lista.isEmpty()) {
-            System.out.println("No hay vehículos registrados.");
+            System.out.println("No hay vehiculos registrados.");
         } else {
             for (Vehiculo v : lista) {
                 System.out.println(v.imprimirDetalle());
@@ -95,57 +95,57 @@ public class VehiculoView {
         }
     }
     private void buscarPorPlaca() {
-        System.out.println("\n--- Buscar Vehículo ---");
+        System.out.println("\n--- Buscar Vehiculo ---");
         System.out.print("Placa: ");
         Vehiculo v = vehiculoService.buscarPorPlaca(sc.nextLine());
         if (v != null) {
             System.out.println(v.imprimirDetalle());
         } else {
-            System.out.println("No se encontró ningún vehículo con esa placa.");
+            System.out.println("No se encontro ningun vehiculo con esa placa.");
         }
     }
 
     private void asignarConductor() {
         System.out.println("\n--- Asignar Conductor ---");
-        System.out.print("Placa del vehículo  : "); String placa  = sc.nextLine();
-        System.out.print("Cédula del conductor: "); String cedula = sc.nextLine();
+        System.out.print("Placa del vehiculo  : "); String placa  = sc.nextLine();
+        System.out.print("Cedula del conductor: "); String cedula = sc.nextLine();
 
         if (vehiculoService.asignarConductor(placa, cedula)) {
             System.out.println("Conductor asignado correctamente.");
         } else {
-            System.out.println("Error: vehículo o conductor no encontrado, o conductor sin licencia.");
+            System.out.println("Error: vehiculo o conductor no encontrado, o conductor sin licencia.");
         }
     }
     private void eliminar() {
-        System.out.println("\n--- Eliminar Vehículo ---");
+        System.out.println("\n--- Eliminar Vehiculo ---");
         System.out.print("Placa: ");
         if (vehiculoService.eliminar(sc.nextLine())) {
-            System.out.println("Vehículo eliminado correctamente.");
+            System.out.println("Vehiculo eliminado correctamente.");
         } else {
-            System.out.println("No se encontró ningún vehículo con esa placa.");
+            System.out.println("No se encontro ningún vehiculo con esa placa.");
         }
     }
     private void actualizar() {
-    System.out.println("\n--- Actualizar Vehículo ---");
-    System.out.print("Placa del vehículo a actualizar: ");
+    System.out.println("\n--- Actualizar Vehiculo ---");
+    System.out.print("Placa del vehiculo a actualizar: ");
     String placa = sc.nextLine();
 
     Vehiculo v = vehiculoService.buscarPorPlaca(placa);
     if (v == null) {
-        System.out.println("No se encontró ningún vehículo con esa placa.");
+        System.out.println("No se encontro ningun vehiculo con esa placa.");
         return;
     }
 
     System.out.println("Deja en blanco para conservar el valor actual.");
-    System.out.print("Nuevo código de ruta (" + v.getRuta().getCodRuta() + "): ");
+    System.out.print("Nuevo codigo de ruta (" + v.getRuta().getCodRuta() + "): ");
     String codRuta = sc.nextLine();
 
     String conductorActual = v.getConductor() != null ? v.getConductor().getCedula() : "Sin asignar";
-    System.out.print("Nueva cédula conductor (" + conductorActual + "): ");
+    System.out.print("Nueva cedula conductor (" + conductorActual + "): ");
     String cedula = sc.nextLine();
 
     if (vehiculoService.actualizar(placa, codRuta, cedula)) {
-        System.out.println("Vehículo actualizado correctamente.");
+        System.out.println("Vehiculo actualizado correctamente.");
     } else {
         System.out.println("Error al actualizar.");
     }

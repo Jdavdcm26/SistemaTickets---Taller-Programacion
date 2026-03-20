@@ -20,14 +20,14 @@ public class ConductorView {
     public void menu() {
         int opcion;
         do {
-            System.out.println("\n===== MENÚ CONDUCTORES =====");
+            System.out.println("\n===== MENU CONDUCTORES =====");
             System.out.println("1. Registrar conductor");
             System.out.println("2. Listar todos");
-            System.out.println("3. Buscar por cédula");
+            System.out.println("3. Buscar por cedula");
             System.out.println("4. Actualizar conductor");
             System.out.println("5. Eliminar conductor");
             System.out.println("0. Volver");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -37,23 +37,23 @@ public class ConductorView {
                 case 4 -> actualizar();
                 case 5 -> eliminar();
                 case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opción no valida.");
             }
         } while (opcion != 0);
     }  
     private void registrar() {
         System.out.println("\n--- Registrar Conductor ---");
-        System.out.print("Cédula          : "); String cedula = sc.nextLine();
+        System.out.print("Cedula          : "); String cedula = sc.nextLine();
         System.out.print("Nombre          : "); String nombre = sc.nextLine();
         System.out.print("N° Licencia     : "); String licencia = sc.nextLine();
-        System.out.println("Categoría (B1, B2, C1, C2): ");
-        System.out.print("Categoría       : "); String categoria = sc.nextLine();
+        System.out.println("Categoria (B1, B2, C1, C2): ");
+        System.out.print("Categoria       : "); String categoria = sc.nextLine();
 
         Conductor c = new Conductor(cedula, nombre, licencia, categoria);
         if (conductorService.agregar(c)) {
             System.out.println("Conductor registrado correctamente.");
         } else {
-            System.out.println("Error: ya existe un conductor con esa cédula o licencia inválida.");
+            System.out.println("Error: ya existe un conductor con esa cedula o licencia invalida.");
         }
     }
 
@@ -71,24 +71,24 @@ public class ConductorView {
     }
         private void buscarPorCedula() {
         System.out.println("\n--- Buscar Conductor ---");
-        System.out.print("Cédula: ");
+        System.out.print("Cedula: ");
         String cedula = sc.nextLine();
         Conductor c = conductorService.buscarPorCedula(cedula);
         if (c != null) {
             System.out.println(c.imprimirDetalle());
         } else {
-            System.out.println("No se encontró ningún conductor con esa cédula.");
+            System.out.println("No se encontro ningun conductor con esa cedula.");
         }
     }
 
     private void actualizar() {
         System.out.println("\n--- Actualizar Conductor ---");
-        System.out.print("Cédula del conductor a actualizar: ");
+        System.out.print("Cedula del conductor a actualizar: ");
         String cedula = sc.nextLine();
 
         Conductor c = conductorService.buscarPorCedula(cedula);
         if (c == null) {
-            System.out.println("No se encontró ningún conductor con esa cédula.");
+            System.out.println("No se encontro ningun conductor con esa cedula.");
             return;
         }
 
@@ -97,7 +97,7 @@ public class ConductorView {
         String nombre = sc.nextLine();
         System.out.print("Nuevo N° licencia (" + c.getNumeroLicencia() + "): ");
         String licencia = sc.nextLine();
-        System.out.print("Nueva categoría (" + c.getCategoriaLicencia() + "): ");
+        System.out.print("Nueva categoria (" + c.getCategoriaLicencia() + "): ");
         String categoria = sc.nextLine();
 
         if (!nombre.isBlank())    c.setNombre(nombre);
@@ -113,12 +113,12 @@ public class ConductorView {
 
     private void eliminar() {
         System.out.println("\n--- Eliminar Conductor ---");
-        System.out.print("Cédula: ");
+        System.out.print("Cedula: ");
         String cedula = sc.nextLine();
         if (conductorService.eliminar(cedula)) {
             System.out.println("Conductor eliminado correctamente.");
         } else {
-            System.out.println("No se encontró ningún conductor con esa cédula.");
+            System.out.println("No se encontro ningun conductor con esa cedula.");
         }
     }
 }

@@ -25,12 +25,12 @@ public class TicketView {
     public void menu() {
         int opcion;
         do {
-            System.out.println("\n===== MENÚ TICKETS =====");
+            System.out.println("\n===== MENU TICKETS =====");
             System.out.println("1. Vender ticket");
             System.out.println("2. Listar todos");
             System.out.println("3. Reportes y estadísticas");
             System.out.println("0. Volver");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -38,30 +38,30 @@ public class TicketView {
                 case 2 -> listarTodos();
                 case 3 -> menuReportes();
                 case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opcion no valida.");
             }
         } while (opcion != 0);
     } 
     private void vender() {
     System.out.println("\n--- Vender Ticket ---");
-    System.out.print("Código de ruta: ");
+    System.out.print("Codigo de ruta: ");
     String codRuta = sc.nextLine();
 
     // CAMBIO: ArrayList con tipo genérico
     ArrayList<Vehiculo> vehiculos = vehiculoService.buscarPorRuta(codRuta);
     if (vehiculos.isEmpty()) {
-        System.out.println("No hay vehículos disponibles para esa ruta.");
+        System.out.println("No hay vehiculos disponibles para esa ruta.");
         return;
     }
 
-    System.out.println("\nVehículos disponibles:");
+    System.out.println("\nVehiculos disponibles:");
     for (int i = 0; i < vehiculos.size(); i++) {
         // CAMBIO: imprimirDetalle() en vez de toString()
         System.out.println((i + 1) + ". " + vehiculos.get(i).imprimirDetalle());
         System.out.println("----------------------");
     }
 
-    System.out.print("\nCédula del pasajero: ");
+    System.out.print("\nCedula del pasajero: ");
     String cedula = sc.nextLine();
 
     System.out.print("Placa del vehículo : ");
@@ -85,13 +85,13 @@ public class TicketView {
     private void menuReportes() {
         int opcion;
         do {
-            System.out.println("\n===== REPORTES Y ESTADÍSTICAS =====");
+            System.out.println("\n===== REPORTES Y ESTADISTICAS =====");
             System.out.println("1. Tickets por fecha");
-            System.out.println("2. Tickets por tipo de vehículo");
+            System.out.println("2. Tickets por tipo de vehiculo");
             System.out.println("3. Tickets por tipo de pasajero");
-            System.out.println("4. Vehículo con más tickets");
+            System.out.println("4. Vehiculo con más tickets");
             System.out.println("5. Total recaudado");
-            System.out.println("6. Resumen del día");
+            System.out.println("6. Resumen del dia");
             System.out.println("0. Volver");
             System.out.print("Opción: ");
             opcion = Integer.parseInt(sc.nextLine());
@@ -104,7 +104,7 @@ public class TicketView {
                 case 5 -> totalRecaudado();
                 case 6 -> resumenDelDia();
                 case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opcion no valida.");
             }
         } while (opcion != 0);
     }
@@ -123,7 +123,7 @@ public class TicketView {
         }
     }
     private void ticketsPorTipoVehiculo() {
-        System.out.println("\n--- Tickets por Tipo de Vehículo ---");
+        System.out.println("\n--- Tickets por Tipo de Vehiculo ---");
         System.out.println("Tipo: 1. Bus  2. Buseta  3. MicroBus");
         System.out.print("Tipo: ");
         int opcion = Integer.parseInt(sc.nextLine());
@@ -134,12 +134,12 @@ public class TicketView {
             default -> "";
         };
         if (tipo.isBlank()) {
-            System.out.println("Tipo no válido.");
+            System.out.println("Tipo no valido.");
             return;
         }
         ArrayList<Ticket> lista = ticketService.ticketsPorTipoVehiculo(tipo);
         if (lista.isEmpty()) {
-            System.out.println("No hay tickets para ese tipo de vehículo.");
+            System.out.println("No hay tickets para ese tipo de vehiculo.");
         } else {
             for (Ticket t : lista) {
                 System.out.println(t.imprimirDetalle());
@@ -158,7 +158,7 @@ public class TicketView {
         }
     }
     private void vehiculoConMasTickets() {
-        System.out.println("\n--- Vehículo con más tickets ---");
+        System.out.println("\n--- Vehiculo con más tickets ---");
         System.out.println(ticketService.vehiculoConMasTickets());
     }
     private void totalRecaudado() {
@@ -167,7 +167,7 @@ public class TicketView {
     }
 
     private void resumenDelDia() {
-        System.out.println("\n--- Resumen del Día ---");
+        System.out.println("\n--- Resumen del Dia ---");
         System.out.println(ticketService.resumenDelDia());
     }
 }

@@ -23,14 +23,14 @@ public class PasajeroView {
     public void menu() {
         int opcion;
         do {
-            System.out.println("\n===== MENÚ PASAJEROS =====");
+            System.out.println("\n===== MENU PASAJEROS =====");
             System.out.println("1. Registrar pasajero");
             System.out.println("2. Listar todos");
-            System.out.println("3. Buscar por cédula");
+            System.out.println("3. Buscar por cedula");
             System.out.println("4. Actualizar pasajero");
             System.out.println("5. Eliminar pasajero");
             System.out.println("0. Volver");
-            System.out.print("Opción: ");
+            System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
@@ -40,13 +40,13 @@ public class PasajeroView {
                 case 4 -> actualizarPasajero();
                 case 5 -> eliminar();
                 case 0 -> System.out.println("Volviendo...");
-                default -> System.out.println("Opción no válida.");
+                default -> System.out.println("Opcion no valida.");
             }
         } while (opcion != 0);
     } 
     private void registrar() {
         System.out.println("\n--- Registrar Pasajero ---");
-        System.out.print("Cédula                    : "); String cedula = sc.nextLine();
+        System.out.print("Cedula                    : "); String cedula = sc.nextLine();
         System.out.print("Nombre                    : "); String nombre = sc.nextLine();
         System.out.print("Fecha nacimiento (yyyy-MM-dd): "); 
         LocalDate fechaNacimiento = LocalDate.parse(sc.nextLine());
@@ -56,7 +56,7 @@ public class PasajeroView {
         if (pasajeroService.agregar(cedula, nombre, fechaNacimiento, tipo)) {
             System.out.println("Pasajero registrado correctamente.");
         } else {
-            System.out.println("Error: ya existe un pasajero o conductor con esa cédula.");
+            System.out.println("Error: ya existe un pasajero o conductor con esa cedula.");
         }
     }
 
@@ -74,34 +74,34 @@ public class PasajeroView {
     }
     private void buscarPorCedula() {
         System.out.println("\n--- Buscar Pasajero ---");
-        System.out.print("Cédula: ");
+        System.out.print("Cedula: ");
         String cedula = sc.nextLine();
         Pasajero p = pasajeroService.buscarPorCedula(cedula);
         if (p != null) {
             System.out.println(p.imprimirDetalle());
         } else {
-            System.out.println("No se encontró ningún pasajero con esa cédula.");
+            System.out.println("No se encontro ningun pasajero con esa cedula.");
         }
     }
 
     private void eliminar() {
         System.out.println("\n--- Eliminar Pasajero ---");
-        System.out.print("Cédula: ");
+        System.out.print("Cedula: ");
         String cedula = sc.nextLine();
         if (pasajeroService.eliminar(cedula)) {
             System.out.println("Pasajero eliminado correctamente.");
         } else {
-            System.out.println("No se encontró ningún pasajero con esa cédula.");
+            System.out.println("No se encontro ningun pasajero con esa cedula.");
         }
     }
     public void actualizarPasajero() {
     try (Scanner scanner = new Scanner(System.in)) {
         System.out.println("=== Actualizar Pasajero ===");
         
-        System.out.print("Ingrese la cédula del pasajero a actualizar: ");
+        System.out.print("Ingrese la cedula del pasajero a actualizar: ");
         String cedula = scanner.nextLine().trim();
         if (cedula.isEmpty()) {
-            System.out.println("Cédula no puede estar vacía.");
+            System.out.println("Cedula no puede estar vacía.");
             return;
         }
         
@@ -122,14 +122,14 @@ public class PasajeroView {
                 return;
             }
         } catch (DateTimeParseException e) {
-            System.out.println("Formato de fecha inválido. Use yyyy-MM-dd.");
+            System.out.println("Formato de fecha invalido. Use yyyy-MM-dd.");
             return;
         }
         
         System.out.print("Ingrese el nuevo tipo (estudiante/regular): ");
         String tipo = scanner.nextLine().trim().toLowerCase();
         if (!tipo.equals("estudiante") && !tipo.equals("regular")) {
-            System.out.println("Tipo inválido. Debe ser 'estudiante' o 'regular'.");
+            System.out.println("Tipo invalido. Debe ser 'estudiante' o 'regular'.");
             return;
         }
         
@@ -137,7 +137,7 @@ public class PasajeroView {
         if (exito) {
             System.out.println("Pasajero actualizado exitosamente.");
         } else {
-            System.out.println("Error: No se pudo actualizar el pasajero. Verifique la cédula o intente nuevamente.");
+            System.out.println("Error: No se pudo actualizar el pasajero. Verifique la cedula o intente nuevamente.");
         }
     }
 }
