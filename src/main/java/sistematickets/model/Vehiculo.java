@@ -3,7 +3,7 @@ package sistematickets.model;
 /**
  @author josec
  */
-public abstract class Vehiculo {
+public abstract class Vehiculo implements InterfazImprimible {
     protected String  placa;
     protected Ruta  ruta; //Esperando creacion de la clase ruta
     protected int     capacidadMaxima;
@@ -76,5 +76,6 @@ public abstract class Vehiculo {
 
      public abstract String getTipo();
 
+    @Override
      public abstract String toFile();
 }
