@@ -4,6 +4,9 @@
  */
 package sistematickets.view;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import sistematickets.model.Pasajero;
@@ -69,4 +72,73 @@ public class PasajeroView {
             }
         }
     }
+    private void buscarPorCedula() {
+        System.out.println("\n--- Buscar Pasajero ---");
+        System.out.print("Cédula: ");
+        String cedula = sc.nextLine();
+        Pasajero p = pasajeroService.buscarPorCedula(cedula);
+        if (p != null) {
+            System.out.println(p.imprimirDetalle());
+        } else {
+            System.out.println("No se encontró ningún pasajero con esa cédula.");
+        }
+    }
+
+    private void eliminar() {
+        System.out.println("\n--- Eliminar Pasajero ---");
+        System.out.print("Cédula: ");
+        String cedula = sc.nextLine();
+        if (pasajeroService.eliminar(cedula)) {
+            System.out.println("Pasajero eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró ningún pasajero con esa cédula.");
+        }
+    }
+    public void actualizarPasajero() {
+    try (Scanner scanner = new Scanner(System.in)) {
+        System.out.println("=== Actualizar Pasajero ===");
+        
+        System.out.print("Ingrese la cédula del pasajero a actualizar: ");
+        String cedula = scanner.nextLine().trim();
+        if (cedula.isEmpty()) {
+            System.out.println("Cédula no puede estar vacía.");
+            return;
+        }
+        
+        System.out.print("Ingrese el nuevo nombre: ");
+        String nombre = scanner.nextLine().trim();
+        if (nombre.isEmpty()) {
+            System.out.println("Nombre no puede estar vacío.");
+            return;
+        }
+        
+        System.out.print("Ingrese la nueva fecha de nacimiento (formato: yyyy-MM-dd): ");
+        String fechaStr = scanner.nextLine().trim();
+        LocalDate fechaNacimiento;
+        try {
+            fechaNacimiento = LocalDate.parse(fechaStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            if (fechaNacimiento.isAfter(LocalDate.now())) {
+                System.out.println("La fecha de nacimiento no puede ser futura.");
+                return;
+            }
+        } catch (DateTimeParseException e) {
+            System.out.println("Formato de fecha inválido. Use yyyy-MM-dd.");
+            return;
+        }
+        
+        System.out.print("Ingrese el nuevo tipo (estudiante/regular): ");
+        String tipo = scanner.nextLine().trim().toLowerCase();
+        if (!tipo.equals("estudiante") && !tipo.equals("regular")) {
+            System.out.println("Tipo inválido. Debe ser 'estudiante' o 'regular'.");
+            return;
+        }
+        
+        boolean exito = pasajeroService.actualizar(cedula, nombre, fechaNacimiento, tipo);
+        if (exito) {
+            System.out.println("Pasajero actualizado exitosamente.");
+        } else {
+            System.out.println("Error: No se pudo actualizar el pasajero. Verifique la cédula o intente nuevamente.");
+        }
+    }
+}
 }
