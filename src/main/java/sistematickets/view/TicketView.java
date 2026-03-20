@@ -6,6 +6,7 @@ package sistematickets.view;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import sistematickets.model.Ticket;
 import sistematickets.model.Vehiculo;
@@ -144,6 +145,16 @@ public class TicketView {
                 System.out.println(t.imprimirDetalle());
                 System.out.println("----------------------");
             }
+        }
+    }
+    private void ticketsPorTipoPasajero() {
+        System.out.println("\n--- Tickets por Tipo de Pasajero ---");
+        HashMap<String, Long> resultado = ticketService.ticketsPorTipoPasajero();
+        if (resultado.isEmpty()) {
+            System.out.println("No hay tickets registrados.");
+        } else {
+            resultado.forEach((tipo, cantidad) ->
+                System.out.println(tipo + ": " + cantidad + " tickets"));
         }
     }
 }
