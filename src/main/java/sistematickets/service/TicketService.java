@@ -6,6 +6,7 @@ package sistematickets.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -95,4 +96,30 @@ public class TicketService {
             return "Error al procesar la venta.";
         }
     }
+    
+    public ArrayList<Ticket> listarTodos() {
+        try {
+            return ticketDao.cargarLista(pasajeroDao, vehiculoDao, rutaDao, conductorDao);
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    // Estadísticas: total recaudado
+    public double totalRecaudado() {
+        return listarTodos().stream()
+                .mapToDouble(Ticket::getValorFinal)
+                .sum();
+    }
+
+    // Estadísticas: tickets por tipo de pasajero
+    public HashMap<String, Long> ticketsPorTipoPasajero() {
+        HashMap<String, Long> resultado = new HashMap<>();
+        listarTodos().forEach(t -> {
+            String tipo = t.getPasajero().getTipo();
+            resultado.put(tipo, resultado.getOrDefault(tipo, 0L) + 1);
+        });
+        return resultado;
+    }
+    
 }
