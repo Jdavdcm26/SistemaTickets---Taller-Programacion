@@ -121,4 +121,29 @@ public class TicketView {
             }
         }
     }
+    private void ticketsPorTipoVehiculo() {
+        System.out.println("\n--- Tickets por Tipo de Vehículo ---");
+        System.out.println("Tipo: 1. Bus  2. Buseta  3. MicroBus");
+        System.out.print("Tipo: ");
+        int opcion = Integer.parseInt(sc.nextLine());
+        String tipo = switch (opcion) {
+            case 1 -> "Bus";
+            case 2 -> "Buseta";
+            case 3 -> "MicroBus";
+            default -> "";
+        };
+        if (tipo.isBlank()) {
+            System.out.println("Tipo no válido.");
+            return;
+        }
+        ArrayList<Ticket> lista = ticketService.ticketsPorTipoVehiculo(tipo);
+        if (lista.isEmpty()) {
+            System.out.println("No hay tickets para ese tipo de vehículo.");
+        } else {
+            for (Ticket t : lista) {
+                System.out.println(t.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
+    }
 }
