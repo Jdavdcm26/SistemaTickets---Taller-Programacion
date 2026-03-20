@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import sistematickets.model.Bus;
 import sistematickets.model.Buseta;
@@ -96,5 +97,12 @@ public class VehiculoDao {
                 bw.newLine();
             }
         }
+    }
+    public Vehiculo buscarPorPlaca(String placa, RutaDao rutaDao, ConductorDao conductorDao) throws IOException {
+        return cargarTodos(rutaDao, conductorDao).get(placa);
+    }
+
+    public ArrayList<Vehiculo> cargarLista(RutaDao rutaDao, ConductorDao conductorDao) throws IOException {
+        return new ArrayList<>(cargarTodos(rutaDao, conductorDao).values());
     }
 }
