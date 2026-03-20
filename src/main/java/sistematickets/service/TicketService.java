@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import sistematickets.dao.ConductorDao;
 import sistematickets.dao.PasajeroDao;
 import sistematickets.dao.RutaDao;
@@ -122,4 +123,39 @@ public class TicketService {
         return resultado;
     }
     
+    public String vehiculoConMasTickets() {
+        HashMap<String, Long> conteo = new HashMap<>();
+        listarTodos().forEach(t -> {
+            String placa = t.getVehiculo().getPlaca();
+            conteo.put(placa, conteo.getOrDefault(placa, 0L) + 1);
+        });
+        return conteo.entrySet().stream()
+                .max(java.util.Map.Entry.comparingByValue())
+                .map(e -> "Placa: " + e.getKey() + " con " + e.getValue() + " tickets")
+                .orElse("No hay tickets registrados.");
+    }
+
+    // Reportes taller 2: tickets por fecha
+    public ArrayList<Ticket> ticketsPorFecha(LocalDate fecha) {
+        return listarTodos().stream()
+                .filter(t -> t.getFechaCompra().equals(fecha))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    // Reportes taller 2: tickets por tipo de vehículo
+    public ArrayList<Ticket> ticketsPorTipoVehiculo(String tipo) {
+        return listarTodos().stream()
+                .filter(t -> t.getVehiculo().getTipo().equalsIgnoreCase(tipo))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    // Reportes taller 2: resumen del día
+    public String resumenDelDia() {
+        LocalDate hoy = LocalDate.now();
+        ArrayList<Ticket> ticketsHoy = ticketsPorFecha(hoy);
+        double totalHoy = ticketsHoy.stream().mapToDouble(Ticket::getValorFinal).sum();
+        return "Fecha          : " + hoy +
+               "\nTickets vendidos: " + ticketsHoy.size() +
+               "\nTotal recaudado : $" + totalHoy;
+    }
 }
