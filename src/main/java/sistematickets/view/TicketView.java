@@ -79,5 +79,31 @@ public class TicketView {
                 System.out.println("----------------------");
             }
         }
-    }     
+    }
+    private void menuReportes() {
+        int opcion;
+        do {
+            System.out.println("\n===== REPORTES Y ESTADÍSTICAS =====");
+            System.out.println("1. Tickets por fecha");
+            System.out.println("2. Tickets por tipo de vehículo");
+            System.out.println("3. Tickets por tipo de pasajero");
+            System.out.println("4. Vehículo con más tickets");
+            System.out.println("5. Total recaudado");
+            System.out.println("6. Resumen del día");
+            System.out.println("0. Volver");
+            System.out.print("Opción: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+                case 1 -> ticketsPorFecha();
+                case 2 -> ticketsPorTipoVehiculo();
+                case 3 -> ticketsPorTipoPasajero();
+                case 4 -> vehiculoConMasTickets();
+                case 5 -> totalRecaudado();
+                case 6 -> resumenDelDia();
+                case 0 -> System.out.println("Volviendo...");
+                default -> System.out.println("Opción no válida.");
+            }
+        } while (opcion != 0);
+    }
 }
