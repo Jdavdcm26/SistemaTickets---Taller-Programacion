@@ -4,10 +4,40 @@
  */
 package sistematickets.service;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import sistematickets.dao.RutaDao;
+import sistematickets.model.Ruta;
+
 /**
  *
  * @author josec
  */
 public class RutaService {
-    
+    private RutaDao rutaDao = new RutaDao();
+    public boolean agregar(Ruta r) {
+        try {
+            if (rutaDao.buscarPorCodigo(r.getCodRuta()) != null) {
+                return false;
+            }
+            rutaDao.agregarRuta(r);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+    public Ruta buscarPorCodigo(String codRuta) {
+        try {
+            return rutaDao.buscarPorCodigo(codRuta);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    public ArrayList<Ruta> listarTodas() {
+        try {
+            return rutaDao.cargarLista();
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
 }
