@@ -12,6 +12,7 @@ import sistematickets.dao.ConductorDao;
 import sistematickets.dao.RutaDao;
 import sistematickets.dao.VehiculoDao;
 import sistematickets.model.Conductor;
+import sistematickets.model.Ruta;
 import sistematickets.model.Vehiculo;
 
 /**
@@ -91,4 +92,28 @@ public class VehiculoService {
             return false;
         }
     }
+    public boolean actualizar(String placa, String codRuta, String cedulaConductor) {
+    try {
+        HashMap<String, Vehiculo> vehiculos = vehiculoDao.cargarTodos(rutaDao, conductorDao);
+        Vehiculo v = vehiculos.get(placa);
+        if (v == null) return false;
+
+        if (codRuta != null && !codRuta.isBlank()) {
+            Ruta ruta = rutaDao.buscarPorCodigo(codRuta);
+            if (ruta == null) return false;
+            v.setRuta(ruta);
+        }
+
+        if (cedulaConductor != null && !cedulaConductor.isBlank()) {
+            Conductor c = conductorDao.buscarPorCedula(cedulaConductor);
+            if (c == null || c.getNumeroLicencia().isBlank()) return false;
+            v.setConductor(c);
+        }
+
+        vehiculoDao.guardarTodos(vehiculos);
+        return true;
+    } catch (IOException e) {
+        return false;
+    }
+}
 }
