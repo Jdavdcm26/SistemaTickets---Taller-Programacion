@@ -8,6 +8,6 @@ package sistematickets.model;
  *
  * @author jadis
  */
-public class Calculable {
+public interface Calculable {
     double calcularTotal();
 }
