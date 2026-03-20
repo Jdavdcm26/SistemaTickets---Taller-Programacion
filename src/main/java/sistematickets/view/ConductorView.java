@@ -4,7 +4,9 @@
  */
 package sistematickets.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import sistematickets.model.Conductor;
 import sistematickets.service.ConductorService;
 
 /**
@@ -39,4 +41,32 @@ public class ConductorView {
             }
         } while (opcion != 0);
     }  
+    private void registrar() {
+        System.out.println("\n--- Registrar Conductor ---");
+        System.out.print("Cédula          : "); String cedula = sc.nextLine();
+        System.out.print("Nombre          : "); String nombre = sc.nextLine();
+        System.out.print("N° Licencia     : "); String licencia = sc.nextLine();
+        System.out.println("Categoría (B1, B2, C1, C2): ");
+        System.out.print("Categoría       : "); String categoria = sc.nextLine();
+
+        Conductor c = new Conductor(cedula, nombre, licencia, categoria);
+        if (conductorService.agregar(c)) {
+            System.out.println("Conductor registrado correctamente.");
+        } else {
+            System.out.println("Error: ya existe un conductor con esa cédula o licencia inválida.");
+        }
+    }
+
+    private void listarTodos() {
+        System.out.println("\n--- Listado de Conductores ---");
+        ArrayList<Conductor> lista = conductorService.listarTodos();
+        if (lista.isEmpty()) {
+            System.out.println("No hay conductores registrados.");
+        } else {
+            for (Conductor c : lista) {
+                System.out.println(c.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
+    }
 }
