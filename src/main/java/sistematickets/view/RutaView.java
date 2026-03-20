@@ -68,4 +68,57 @@ public class RutaView {
             }
         }
     }
+      private void buscarPorCodigo() {
+        System.out.println("\n--- Buscar Ruta ---");
+        System.out.print("Código: ");
+        String cod = sc.nextLine();
+        Ruta r = rutaService.buscarPorCodigo(cod);
+        if (r != null) {
+            System.out.println(r.imprimirDetalle());
+        } else {
+            System.out.println("No se encontró ninguna ruta con ese código.");
+        }
+    }
+        private void actualizar() {
+            System.out.println("\n--- Actualizar Ruta ---");
+            System.out.print("Código de la ruta a actualizar: ");
+            String cod = sc.nextLine();
+
+            Ruta r = rutaService.buscarPorCodigo(cod);
+            if (r == null) {
+            System.out.println("No se encontró ninguna ruta con ese código.");
+            return;
+        }
+
+            System.out.println("Deja en blanco para conservar el valor actual.");
+            System.out.print("Nuevo origen (" + r.getCiuOrigen() + "): ");
+            String ori = sc.nextLine();
+            System.out.print("Nuevo destino (" + r.getCiuDestino() + "): ");
+            String des = sc.nextLine();
+            System.out.print("Nuevos kilómetros (" + r.getKilometros() + "): ");
+            String km = sc.nextLine();
+            System.out.print("Nuevo tiempo en min (" + r.getTiemReco() + "): ");
+            String tiem = sc.nextLine();
+
+            if (!ori.isBlank())  r.setCiuOrigen(ori);
+            if (!des.isBlank())  r.setCiuDestino(des);
+            if (!km.isBlank())   r.setKilometros(Integer.parseInt(km));
+            if (!tiem.isBlank()) r.setTiemReco(Integer.parseInt(tiem));
+
+            if (rutaService.actualizar(r)) {
+            System.out.println("Ruta actualizada correctamente.");
+            } else {
+            System.out.println("Error al actualizar.");
+            }
+    }
+        private void eliminar() {
+        System.out.println("\n--- Eliminar Ruta ---");
+        System.out.print("Código: ");
+        String cod = sc.nextLine();
+        if (rutaService.eliminar(cod)) {
+            System.out.println("Ruta eliminada correctamente.");
+        } else {
+            System.out.println("No se encontró ninguna ruta con ese código.");
+        }
+    }
 }
