@@ -69,4 +69,56 @@ public class ConductorView {
             }
         }
     }
+        private void buscarPorCedula() {
+        System.out.println("\n--- Buscar Conductor ---");
+        System.out.print("Cédula: ");
+        String cedula = sc.nextLine();
+        Conductor c = conductorService.buscarPorCedula(cedula);
+        if (c != null) {
+            System.out.println(c.imprimirDetalle());
+        } else {
+            System.out.println("No se encontró ningún conductor con esa cédula.");
+        }
+    }
+
+    private void actualizar() {
+        System.out.println("\n--- Actualizar Conductor ---");
+        System.out.print("Cédula del conductor a actualizar: ");
+        String cedula = sc.nextLine();
+
+        Conductor c = conductorService.buscarPorCedula(cedula);
+        if (c == null) {
+            System.out.println("No se encontró ningún conductor con esa cédula.");
+            return;
+        }
+
+        System.out.println("Deja en blanco para conservar el valor actual.");
+        System.out.print("Nuevo nombre (" + c.getNombre() + "): ");
+        String nombre = sc.nextLine();
+        System.out.print("Nuevo N° licencia (" + c.getNumeroLicencia() + "): ");
+        String licencia = sc.nextLine();
+        System.out.print("Nueva categoría (" + c.getCategoriaLicencia() + "): ");
+        String categoria = sc.nextLine();
+
+        if (!nombre.isBlank())    c.setNombre(nombre);
+        if (!licencia.isBlank())  c.setNumeroLicencia(licencia);
+        if (!categoria.isBlank()) c.setCategoriaLicencia(categoria);
+
+        if (conductorService.actualizar(c)) {
+            System.out.println("Conductor actualizado correctamente.");
+        } else {
+            System.out.println("Error al actualizar.");
+        }
+    }
+
+    private void eliminar() {
+        System.out.println("\n--- Eliminar Conductor ---");
+        System.out.print("Cédula: ");
+        String cedula = sc.nextLine();
+        if (conductorService.eliminar(cedula)) {
+            System.out.println("Conductor eliminado correctamente.");
+        } else {
+            System.out.println("No se encontró ningún conductor con esa cédula.");
+        }
+    }
 }
