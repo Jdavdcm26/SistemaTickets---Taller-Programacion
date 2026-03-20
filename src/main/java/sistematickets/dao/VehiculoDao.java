@@ -71,4 +71,30 @@ public class VehiculoDao {
             }
         }
     }
+    public void guardarTodos(HashMap<String, Vehiculo> vehiculos) throws IOException {
+        HashMap<String, Vehiculo> buses      = new HashMap<>();
+        HashMap<String, Vehiculo> busetas    = new HashMap<>();
+        HashMap<String, Vehiculo> microbuses = new HashMap<>();
+
+        for (Vehiculo v : vehiculos.values()) {
+            switch (v.getTipo()) {
+                case "Bus"      -> buses.put(v.getPlaca(), v);
+                case "Buseta"   -> busetas.put(v.getPlaca(), v);
+                case "MicroBus" -> microbuses.put(v.getPlaca(), v);
+            }
+        }
+        guardarArchivo(RutaArchivos.BUSES,     buses);
+        guardarArchivo(RutaArchivos.BUSETAS,    busetas);
+        guardarArchivo(RutaArchivos.MICROBUSES, microbuses);
+    }
+
+    private void guardarArchivo(String ruta, HashMap<String, Vehiculo> mapa) throws IOException {
+        File archivo = new File(ruta);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            for (Vehiculo v : mapa.values()) {
+                bw.write(v.toFile());
+                bw.newLine();
+            }
+        }
+    }
 }
