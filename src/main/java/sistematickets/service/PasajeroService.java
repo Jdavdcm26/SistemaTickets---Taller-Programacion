@@ -7,6 +7,8 @@ package sistematickets.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.HashMap;
 import sistematickets.dao.ConductorDao;
 import sistematickets.dao.PasajeroDao;
 import sistematickets.model.Pasajero;
@@ -51,6 +53,53 @@ public class PasajeroService {
             return pasajeroDao.buscarPorCedula(cedula);
         } catch (IOException e) {
             return null;
+        }
+    }
+    
+    public ArrayList<Pasajero> listarTodos() {
+        try {
+            return pasajeroDao.cargarLista();
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
+    
+    public boolean actualizar(String cedula, String nombre, LocalDate fechaNacimiento, String tipo) {
+    try {
+        HashMap<String, Pasajero> pasajeros = pasajeroDao.cargarPasajeros();
+        if (!pasajeros.containsKey(cedula)) {
+            return false;
+        }
+        // Calcular nueva edad
+        int edad = Period.between(fechaNacimiento, LocalDate.now()).getYears();
+        Pasajero pActualizado;
+        if (edad >= 60) {
+            pActualizado = new PasajeroAdultoMayor(cedula, nombre, fechaNacimiento);
+        } else {
+            pActualizado = switch (tipo.toLowerCase()) {
+                case "estudiante" -> new PasajeroEstudiante(cedula, nombre, fechaNacimiento);
+                default           -> new PasajeroRegular(cedula, nombre, fechaNacimiento);
+            };
+        }
+        pasajeros.put(cedula, pActualizado);
+        pasajeroDao.guardarPasajeros(pasajeros);
+        return true;
+    } catch (IOException e) {
+        return false;
+    }
+}
+
+    public boolean eliminar(String cedula) {
+        try {
+            HashMap<String, Pasajero> pasajeros = pasajeroDao.cargarPasajeros();
+            if (!pasajeros.containsKey(cedula)) {
+                return false;
+            }
+            pasajeros.remove(cedula);
+            pasajeroDao.guardarPasajeros(pasajeros);
+            return true;
+        } catch (IOException e) {
+            return false;
         }
     }
     
