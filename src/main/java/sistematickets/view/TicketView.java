@@ -161,4 +161,13 @@ public class TicketView {
         System.out.println("\n--- Vehículo con más tickets ---");
         System.out.println(ticketService.vehiculoConMasTickets());
     }
+    private void totalRecaudado() {
+        System.out.println("\n--- Total Recaudado ---");
+        System.out.println("Total: $" + ticketService.totalRecaudado());
+    }
+
+    private void resumenDelDia() {
+        System.out.println("\n--- Resumen del Día ---");
+        System.out.println(ticketService.resumenDelDia());
+    }
 }
