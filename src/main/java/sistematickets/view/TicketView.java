@@ -6,6 +6,7 @@ package sistematickets.view;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import sistematickets.model.Ticket;
 import sistematickets.model.Vehiculo;
 import sistematickets.service.TicketService;
 import sistematickets.service.VehiculoService;
@@ -67,4 +68,16 @@ public class TicketView {
     String resultado = ticketService.venderTicket(cedula, placa);
     System.out.println(resultado);
 }
+   private void listarTodos() {
+        System.out.println("\n--- Listado de Tickets ---");
+        ArrayList<Ticket> lista = ticketService.listarTodos();
+        if (lista.isEmpty()) {
+            System.out.println("No hay tickets registrados.");
+        } else {
+            for (Ticket t : lista) {
+                System.out.println(t.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
+    }     
 }
