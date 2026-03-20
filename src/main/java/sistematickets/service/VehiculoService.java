@@ -6,9 +6,12 @@ package sistematickets.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 import sistematickets.dao.ConductorDao;
 import sistematickets.dao.RutaDao;
 import sistematickets.dao.VehiculoDao;
+import sistematickets.model.Conductor;
 import sistematickets.model.Vehiculo;
 
 /**
@@ -45,6 +48,47 @@ public class VehiculoService {
             return vehiculoDao.cargarLista(rutaDao, conductorDao);
         } catch (IOException e) {
             return new ArrayList<>();
+        }
+    }
+    public ArrayList<Vehiculo> buscarPorRuta(String codRuta) {
+        try {
+            return vehiculoDao.cargarLista(rutaDao, conductorDao).stream()
+                    .filter(v -> v.getRuta().getCodRuta().equals(codRuta) && v.isDisponible())
+                    .collect(Collectors.toCollection(ArrayList::new));
+        } catch (IOException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public boolean asignarConductor(String placa, String cedulaConductor) {
+        try {
+            HashMap<String, Vehiculo> vehiculos = vehiculoDao.cargarTodos(rutaDao, conductorDao);
+            Vehiculo v = vehiculos.get(placa);
+            if (v == null) return false;
+
+            Conductor c = conductorDao.buscarPorCedula(cedulaConductor);
+            if (c == null) return false;
+
+            // Validación: conductor debe tener licencia
+            if (c.getNumeroLicencia() == null || c.getNumeroLicencia().isBlank()) return false;
+
+            v.setConductor(c);
+            vehiculoDao.guardarTodos(vehiculos);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    public boolean eliminar(String placa) {
+        try {
+            HashMap<String, Vehiculo> vehiculos = vehiculoDao.cargarTodos(rutaDao, conductorDao);
+            if (!vehiculos.containsKey(placa)) return false;
+            vehiculos.remove(placa);
+            vehiculoDao.guardarTodos(vehiculos);
+            return true;
+        } catch (IOException e) {
+            return false;
         }
     }
 }
