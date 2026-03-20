@@ -4,6 +4,7 @@
  */
 package sistematickets.view;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 import sistematickets.model.Ticket;
@@ -105,5 +106,19 @@ public class TicketView {
                 default -> System.out.println("Opción no válida.");
             }
         } while (opcion != 0);
+    }
+    private void ticketsPorFecha() {
+        System.out.println("\n--- Tickets por Fecha ---");
+        System.out.print("Fecha (yyyy-MM-dd): ");
+        LocalDate fecha = LocalDate.parse(sc.nextLine());
+        ArrayList<Ticket> lista = ticketService.ticketsPorFecha(fecha);
+        if (lista.isEmpty()) {
+            System.out.println("No hay tickets para esa fecha.");
+        } else {
+            for (Ticket t : lista) {
+                System.out.println(t.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
     }
 }
