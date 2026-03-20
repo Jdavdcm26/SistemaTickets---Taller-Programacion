@@ -4,7 +4,9 @@
  */
 package sistematickets.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import sistematickets.model.Ruta;
 import sistematickets.service.RutaService;
 
 /**
@@ -38,5 +40,32 @@ public class RutaView {
                 default -> System.out.println("Opción no válida.");
             }
         } while (opcion != 0);
+    }
+    private void agregar() {
+        System.out.println("\n--- Agregar Ruta ---");
+        System.out.print("Código      : "); String cod  = sc.nextLine();
+        System.out.print("Origen      : "); String ori  = sc.nextLine();
+        System.out.print("Destino     : "); String des  = sc.nextLine();
+        System.out.print("Kilómetros  : "); int km       = Integer.parseInt(sc.nextLine());
+        System.out.print("Tiempo(min) : "); int tiem     = Integer.parseInt(sc.nextLine());
+
+        Ruta r = new Ruta(cod, ori, des, km, tiem);
+        if (rutaService.agregar(r)) {
+            System.out.println("Ruta agregada correctamente.");
+        } else {
+            System.out.println("Error: ya existe una ruta con ese código.");
+        }
+    }
+      private void listarTodas() {
+        System.out.println("\n--- Listado de Rutas ---");
+        ArrayList<Ruta> rutas = rutaService.listarTodas();
+        if (rutas.isEmpty()) {
+            System.out.println("No hay rutas registradas.");
+        } else {
+            for (Ruta r : rutas) {
+                System.out.println(r.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
     }
 }
