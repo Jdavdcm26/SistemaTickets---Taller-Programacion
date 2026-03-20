@@ -4,7 +4,9 @@
  */
 package sistematickets.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import sistematickets.model.Vehiculo;
 import sistematickets.service.TicketService;
 import sistematickets.service.VehiculoService;
 
@@ -36,5 +38,33 @@ public class TicketView {
                 default -> System.out.println("Opción no válida.");
             }
         } while (opcion != 0);
-    }  
+    } 
+    private void vender() {
+    System.out.println("\n--- Vender Ticket ---");
+    System.out.print("Código de ruta: ");
+    String codRuta = sc.nextLine();
+
+    // CAMBIO: ArrayList con tipo genérico
+    ArrayList<Vehiculo> vehiculos = vehiculoService.buscarPorRuta(codRuta);
+    if (vehiculos.isEmpty()) {
+        System.out.println("No hay vehículos disponibles para esa ruta.");
+        return;
+    }
+
+    System.out.println("\nVehículos disponibles:");
+    for (int i = 0; i < vehiculos.size(); i++) {
+        // CAMBIO: imprimirDetalle() en vez de toString()
+        System.out.println((i + 1) + ". " + vehiculos.get(i).imprimirDetalle());
+        System.out.println("----------------------");
+    }
+
+    System.out.print("\nCédula del pasajero: ");
+    String cedula = sc.nextLine();
+
+    System.out.print("Placa del vehículo : ");
+    String placa = sc.nextLine();
+
+    String resultado = ticketService.venderTicket(cedula, placa);
+    System.out.println(resultado);
+}
 }
