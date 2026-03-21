@@ -4,11 +4,17 @@
  */
 package sistematickets.service;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
 import sistematickets.dao.ConductorDao;
 import sistematickets.dao.PasajeroDao;
 import sistematickets.dao.ReservaDao;
 import sistematickets.dao.RutaDao;
 import sistematickets.dao.VehiculoDao;
+import sistematickets.model.Pasajero;
+import sistematickets.model.Reserva;
+import sistematickets.model.Vehiculo;
 
 /**
  *
@@ -22,5 +28,36 @@ public class ReservaService {
     private RutaDao rutaDao           = new RutaDao();
     private ConductorDao conductorDao = new ConductorDao();
     private TicketService ticketService = new TicketService();
+    
+     public String crear(String cedulaPasajero, String placaVehiculo, LocalDate fechaViaje) throws IOException {
+        
+        Pasajero pasajero = pasajeroDao.buscarPorCedula(cedulaPasajero);
+        if (pasajero == null) return "Error: pasajero no encontrado.";
+        HashMap<String, Vehiculo> vehiculos = vehiculoDao.cargarTodos(rutaDao, conductorDao);
+        Vehiculo vehiculo = vehiculos.get(placaVehiculo);
+        if (vehiculo == null) return "Error: vehiculo no encontrado.";
+        HashMap<String, Reserva> reservas = reservaDao.cargarReservas(pasajeroDao, vehiculoDao, rutaDao, conductorDao);
+        
+        long reservasActivas = reservas.values().stream()
+                .filter(r -> r.getVehiculo().getPlaca().equals(placaVehiculo)
+                        && r.getEstado() == Reserva.Estado.ACTIVA)
+                .count();
+        
+        if (vehiculo.getPasajerosActuales() + reservasActivas >= vehiculo.getCapacidadMaxima()) {
+            return "Error: no hay cupos disponibles para ese vehiculo.";
+        }
+        
+        boolean yaReservo = reservas.values().stream()
+                .anyMatch(r -> r.getPasajero().getCedula().equals(cedulaPasajero)
+                        && r.getVehiculo().getPlaca().equals(placaVehiculo)
+                        && r.getFechaViaje().equals(fechaViaje)
+                        && r.getEstado() == Reserva.Estado.ACTIVA);
+        if (yaReservo) return "Error: el pasajero ya tiene una reserva activa para ese vehiculo y fecha.";
+        
+        String codigo = "RES-" + System.currentTimeMillis();
+        Reserva reserva = new Reserva(codigo, pasajero, vehiculo, fechaViaje);
+        reservaDao.agregarReserva(reserva);
+        return "Reserva creada correctamente.\n" + reserva.imprimirDetalle();
+    }
     
 }
