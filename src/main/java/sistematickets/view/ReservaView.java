@@ -51,4 +51,18 @@ private void listarActivas() throws IOException {
             }
         }
     }
+private void historialPasajero() throws IOException {
+        System.out.println("\n--- Historial de Reservas ---");
+        System.out.print("Cedula del pasajero: ");
+        String cedula = sc.nextLine();
+        ArrayList<Reserva> lista = reservaService.historialPasajero(cedula);
+        if (lista.isEmpty()) {
+            System.out.println("No hay reservas para ese pasajero.");
+        } else {
+            for (Reserva r : lista) {
+                System.out.println(r.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
+    }
 }
