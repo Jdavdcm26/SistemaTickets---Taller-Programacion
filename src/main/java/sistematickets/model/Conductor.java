@@ -13,7 +13,7 @@ public class Conductor extends Persona {
     private String numeroLicencia;
     private String categoriaLicencia;
 
-    public Conductor(String numeroLicencia, String categoriaLicencia, String cedula, String nombre) {
+    public Conductor( String cedula, String nombre, String numeroLicencia, String categoriaLicencia) {
         super(cedula, nombre);
         this.numeroLicencia = numeroLicencia;
         this.categoriaLicencia = categoriaLicencia;

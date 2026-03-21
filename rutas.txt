@@ -1,0 +1,3 @@
+01;Valledupar;Manaure;28;30
+02;Valledupar;La paz;12;7
+03;Valledupar;Pueblo Bello;47;50

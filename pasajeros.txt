@@ -1,0 +1,3 @@
+15151;Lucas;1957-03-20;Adulto Mayor
+102030;Perla;1970-10-15;Regular
+101010;Juan;2006-05-26;Estudiante
