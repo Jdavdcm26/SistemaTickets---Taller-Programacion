@@ -65,4 +65,10 @@ private void historialPasajero() throws IOException {
             }
         }
     }
+ private void convertirEnTicket() throws IOException {
+        System.out.println("\n--- Convertir Reserva en Ticket ---");
+        System.out.print("Codigo de la reserva: ");
+        String codigo = sc.nextLine();
+        System.out.println(reservaService.convertirEnTicket(codigo));
+    }
 }
