@@ -70,5 +70,9 @@ public class Reserva implements InterfazImprimible{
         this.estado = estado; 
     }
     
+    public boolean estaVencida() {
+        return estado == Estado.ACTIVA &&
+               LocalDateTime.now().isAfter(fechaCreacion.plusHours(24));
+    }
     
 }
