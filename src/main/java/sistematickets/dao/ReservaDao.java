@@ -54,5 +54,15 @@ public HashMap<String, Reserva> cargarReservas(PasajeroDao pasajeroDao, Vehiculo
             }
         }
         return reservas;
-    }  
+    }
+public void guardarReservas(HashMap<String, Reserva> reservas) throws IOException {
+        File archivo = new File(RutaArchivos.RESERVAS);
+        if (!archivo.exists()) archivo.createNewFile();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            for (Reserva r : reservas.values()) {
+                bw.write(r.toFile());
+                bw.newLine();
+            }
+        }
+    }
 }
