@@ -104,4 +104,18 @@ public class ReservaService {
         return resultado;
     }
 
+       public String verificarVencidas() throws IOException {
+        HashMap<String, Reserva> reservas = reservaDao.cargarReservas(pasajeroDao, vehiculoDao, rutaDao, conductorDao);
+        int canceladas = 0;
+        for (Reserva r : reservas.values()) {
+            if (r.estaVencida()) {
+                r.setEstado(Reserva.Estado.CANCELADA);
+                canceladas++;
+            }
+        }
+        if (canceladas > 0) {
+            reservaDao.guardarReservas(reservas);
+        }
+        return "Verificacion completada. Reservas canceladas por vencimiento: " + canceladas;
+    }
 }
