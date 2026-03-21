@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import sistematickets.model.Pasajero;
 import sistematickets.model.Reserva;
@@ -64,5 +65,9 @@ public void guardarReservas(HashMap<String, Reserva> reservas) throws IOExceptio
                 bw.newLine();
             }
         }
+    }
+ public ArrayList<Reserva> cargarLista(PasajeroDao pasajeroDao, VehiculoDao vehiculoDao,
+                                           RutaDao rutaDao, ConductorDao conductorDao) throws IOException {
+        return new ArrayList<>(cargarReservas(pasajeroDao, vehiculoDao, rutaDao, conductorDao).values());
     }
 }
