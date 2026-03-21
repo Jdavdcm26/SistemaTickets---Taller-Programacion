@@ -79,4 +79,11 @@ public class ReservaService {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
     
+      public ArrayList<Reserva> historialPasajero(String cedulaPasajero) throws IOException {
+        return reservaDao.cargarLista(pasajeroDao, vehiculoDao, rutaDao, conductorDao)
+                .stream()
+                .filter(r -> r.getPasajero().getCedula().equals(cedulaPasajero))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+      
 }
