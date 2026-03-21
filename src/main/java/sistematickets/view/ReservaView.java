@@ -71,4 +71,8 @@ private void historialPasajero() throws IOException {
         String codigo = sc.nextLine();
         System.out.println(reservaService.convertirEnTicket(codigo));
     }
+ private void verificarVencidas() throws IOException {
+        System.out.println("\n--- Verificar Reservas Vencidas ---");
+        System.out.println(reservaService.verificarVencidas());
+    }
 }
