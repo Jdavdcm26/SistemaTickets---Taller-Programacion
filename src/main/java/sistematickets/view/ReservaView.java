@@ -75,4 +75,37 @@ private void historialPasajero() throws IOException {
         System.out.println("\n--- Verificar Reservas Vencidas ---");
         System.out.println(reservaService.verificarVencidas());
     }
+  public void menu() throws IOException {
+        int opcion;
+        do {
+            System.out.println("\n===== MENU RESERVAS =====");
+            System.out.println("1. Crear reserva");
+            System.out.println("2. Cancelar reserva");
+            System.out.println("3. Listar reservas activas");
+            System.out.println("4. Historial de reservas de un pasajero");
+            System.out.println("5. Convertir reserva en ticket");
+            System.out.println("6. Verificar reservas vencidas");
+            System.out.println("0. Volver");
+            System.out.print("Opcion: ");
+
+            int opcionTemp = -1;
+            try {
+                opcionTemp = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Opcion no valida.");
+            }
+            opcion = opcionTemp;
+
+            switch (opcion) {
+                case 1 -> crear();
+                case 2 -> cancelar();
+                case 3 -> listarActivas();
+                case 4 -> historialPasajero();
+                case 5 -> convertirEnTicket();
+                case 6 -> verificarVencidas();
+                case 0 -> System.out.println("Volviendo...");
+                default -> System.out.println("Opcion no valida.");
+            }
+        } while (opcion != 0);
+    }
 }
