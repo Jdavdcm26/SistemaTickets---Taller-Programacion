@@ -75,4 +75,16 @@ public class Reserva implements InterfazImprimible{
                LocalDateTime.now().isAfter(fechaCreacion.plusHours(24));
     }
     
+      @Override
+    public String imprimirDetalle() {
+        return "Codigo reserva  : " + codigo +
+               "\nPasajero        : " + pasajero.getNombre() +
+               "\nCedula          : " + pasajero.getCedula() +
+               "\nVehiculo        : " + vehiculo.getTipo() + " - " + vehiculo.getPlaca() +
+               "\nRuta            : " + vehiculo.getRuta().getCiuOrigen() + " - " + vehiculo.getRuta().getCiuDestino() +
+               "\nFecha creacion  : " + fechaCreacion +
+               "\nFecha viaje     : " + fechaViaje +
+               "\nEstado          : " + estado;
+    }
+    
 }
