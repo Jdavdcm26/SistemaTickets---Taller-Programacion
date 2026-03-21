@@ -59,5 +59,15 @@ public class ReservaService {
         reservaDao.agregarReserva(reserva);
         return "Reserva creada correctamente.\n" + reserva.imprimirDetalle();
     }
+     
+      public String cancelar(String codigo) throws IOException {
+        HashMap<String, Reserva> reservas = reservaDao.cargarReservas(pasajeroDao, vehiculoDao, rutaDao, conductorDao);
+        Reserva r = reservas.get(codigo);
+        if (r == null) return "Error: reserva no encontrada.";
+        if (r.getEstado() != Reserva.Estado.ACTIVA) return "Error: la reserva no esta activa.";
+        r.setEstado(Reserva.Estado.CANCELADA);
+        reservaDao.guardarReservas(reservas);
+        return "Reserva cancelada correctamente.";
+    }
     
 }
