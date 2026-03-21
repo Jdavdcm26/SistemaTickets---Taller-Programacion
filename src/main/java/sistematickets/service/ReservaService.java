@@ -86,4 +86,22 @@ public class ReservaService {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
       
+      public String convertirEnTicket(String codigo) throws IOException {
+        HashMap<String, Reserva> reservas = reservaDao.cargarReservas(pasajeroDao, vehiculoDao, rutaDao, conductorDao);
+        Reserva r = reservas.get(codigo);
+        if (r == null) return "Error: reserva no encontrada.";
+        if (r.getEstado() != Reserva.Estado.ACTIVA) return "Error: la reserva no está activa.";
+        
+        String resultado = ticketService.venderTicket(
+                r.getPasajero().getCedula(),
+                r.getVehiculo().getPlaca()
+        );
+        
+        if (!resultado.startsWith("Error")) {
+            r.setEstado(Reserva.Estado.CONVERTIDA);
+            reservaDao.guardarReservas(reservas);
+        }
+        return resultado;
+    }
+
 }
