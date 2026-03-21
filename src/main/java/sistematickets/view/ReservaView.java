@@ -6,7 +6,9 @@ package sistematickets.view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
+import sistematickets.model.Reserva;
 import sistematickets.service.ReservaService;
 
 /**
@@ -37,5 +39,16 @@ public class ReservaView {
         String codigo = sc.nextLine();
         System.out.println(reservaService.cancelar(codigo));
     }
-
+private void listarActivas() throws IOException {
+        System.out.println("\n--- Reservas Activas ---");
+        ArrayList<Reserva> lista = reservaService.listarActivas();
+        if (lista.isEmpty()) {
+            System.out.println("No hay reservas activas.");
+        } else {
+            for (Reserva r : lista) {
+                System.out.println(r.imprimirDetalle());
+                System.out.println("----------------------");
+            }
+        }
+    }
 }
