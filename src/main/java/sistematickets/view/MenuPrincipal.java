@@ -18,7 +18,7 @@ public class MenuPrincipal {
     private ConductorView conductorView = new ConductorView();
     private PasajeroView pasajeroView   = new PasajeroView();
     private TicketView ticketView       = new TicketView();
-        
+            
     public void iniciar() {
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║  SISTEMA DE TICKETS INTERMUNICIPALES ║");
