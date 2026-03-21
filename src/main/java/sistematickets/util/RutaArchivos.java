@@ -16,4 +16,5 @@ public class RutaArchivos {
     public static final String CONDUCTORES = "conductores.txt";  // ← agregar
     public static final String PASAJEROS = "pasajeros.txt";      // ← agregar
     public static final String TICKETS = "tickets.txt";          // ← agregar
+    public static final String RESERVAS = "reservas.txt";
 }
