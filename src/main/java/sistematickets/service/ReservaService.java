@@ -6,7 +6,9 @@ package sistematickets.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 import sistematickets.dao.ConductorDao;
 import sistematickets.dao.PasajeroDao;
 import sistematickets.dao.ReservaDao;
@@ -68,6 +70,13 @@ public class ReservaService {
         r.setEstado(Reserva.Estado.CANCELADA);
         reservaDao.guardarReservas(reservas);
         return "Reserva cancelada correctamente.";
+    }
+      
+      public ArrayList<Reserva> listarActivas() throws IOException {
+        return reservaDao.cargarLista(pasajeroDao, vehiculoDao, rutaDao, conductorDao)
+                .stream()
+                .filter(r -> r.getEstado() == Reserva.Estado.ACTIVA)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
     
 }
