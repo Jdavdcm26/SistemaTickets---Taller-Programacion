@@ -4,6 +4,7 @@
  */
 package sistematickets.view;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -18,8 +19,9 @@ public class MenuPrincipal {
     private ConductorView conductorView = new ConductorView();
     private PasajeroView pasajeroView   = new PasajeroView();
     private TicketView ticketView       = new TicketView();
+    private ReservaView reservaView     = new ReservaView();
             
-    public void iniciar() {
+    public void iniciar() throws IOException {
         System.out.println("╔══════════════════════════════════════╗");
         System.out.println("║  SISTEMA DE TICKETS INTERMUNICIPALES ║");
         System.out.println("║          TransCesar S.A.S.           ║");
@@ -33,6 +35,7 @@ public class MenuPrincipal {
             System.out.println("3. Gestion de Conductores");
             System.out.println("4. Gestion de Pasajeros");
             System.out.println("5. Venta de Tickets");
+            System.out.println("6. Gestio de Reservas");
             System.out.println("0. Salir");
             System.out.print("Opcion: ");
             opcion = Integer.parseInt(sc.nextLine());
@@ -43,6 +46,7 @@ public class MenuPrincipal {
                 case 3 -> conductorView.menu();
                 case 4 -> pasajeroView.menu();
                 case 5 -> ticketView.menu();
+                case 6 -> reservaView.menu();
                 case 0 -> System.out.println("¡Hasta luego!");
                 default -> System.out.println("Opcion no válida.");
             }
