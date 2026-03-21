@@ -87,4 +87,14 @@ public class Reserva implements InterfazImprimible{
                "\nEstado          : " + estado;
     }
     
+     @Override
+    public String toFile() {
+        return codigo + ";" +
+               pasajero.getCedula() + ";" +
+               vehiculo.getPlaca() + ";" +
+               fechaCreacion + ";" +
+               fechaViaje + ";" +
+               estado;
+    }  
+    
 }
