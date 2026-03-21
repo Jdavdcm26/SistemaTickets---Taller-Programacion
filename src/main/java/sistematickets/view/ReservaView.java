@@ -30,5 +30,12 @@ public class ReservaView {
             return;
         }
         System.out.println(reservaService.crear(cedula, placa, fechaViaje));
-    }  
+    }
+     private void cancelar() throws IOException {
+        System.out.println("\n--- Cancelar Reserva ---");
+        System.out.print("Codigo de la reserva: ");
+        String codigo = sc.nextLine();
+        System.out.println(reservaService.cancelar(codigo));
+    }
+
 }
